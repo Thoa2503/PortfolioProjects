@@ -8,8 +8,8 @@ ORDER BY 1,2
 
 -- 1. 
 -- global sales per year
-SELECT year, 
-		ROUND(SUM(global_sales),2) AS global_sales
+SELECT  year, 
+	ROUND(SUM(global_sales),2) AS global_sales
 FROM vgsales
 GROUP BY year WITH ROLLUP
 ORDER BY year
@@ -19,23 +19,23 @@ ORDER BY year
 -- 2.
 -- sales in each region
 SELECT  "NA" AS region,
-		ROUND(SUM(NA_Sales),2) AS NA_Sales, 
-		ROUND((SUM(NA_Sales)/SUM(global_sales))*100,2) AS percentage
+	ROUND(SUM(NA_Sales),2) AS Sales, 
+	ROUND((SUM(NA_Sales)/SUM(global_sales))*100,2) AS percentage
 FROM vgsales
 UNION 
 SELECT  "EU" AS region,
-		ROUND(SUM(EU_Sales),2) AS EU_Sales, 
-		ROUND((SUM(EU_Sales)/SUM(global_sales))*100,2) AS percentage
+	ROUND(SUM(EU_Sales),2) AS Sales, 
+	ROUND((SUM(EU_Sales)/SUM(global_sales))*100,2) AS percentage
 FROM vgsales
 UNION
 SELECT  "JP" AS region,
-		ROUND(SUM(JP_Sales),2) AS JP_Sales, 
-		ROUND((SUM(JP_Sales)/SUM(global_sales))*100,2) AS percentage
+	ROUND(SUM(JP_Sales),2) AS Sales, 
+	ROUND((SUM(JP_Sales)/SUM(global_sales))*100,2) AS percentage
 FROM vgsales
 UNION
 SELECT  "Other" AS region,
-		ROUND(SUM(Other_Sales),2) AS Other_Sales, 
-		ROUND((SUM(Other_Sales)/SUM(global_sales))*100,2) AS percentage
+	ROUND(SUM(Other_Sales),2) AS Sales, 
+	ROUND((SUM(Other_Sales)/SUM(global_sales))*100,2) AS percentage
 FROM vgsales
 -- -> EU - the region with revenue accounting for nearly 50%, followed by NA with 27%
 
@@ -60,27 +60,28 @@ LIMIT 5
 
 -- 4.
 -- the most popular genre in each region
-SELECT genre,
-		ROUND(SUM(global_sales),2) AS global_sales_by_genre,
+SELECT  genre,
+	ROUND(SUM(global_sales),2) AS sales_by_genre,
         ROUND(SUM(EU_Sales),2) AS EU_sales_by_genre,
         ROUND(SUM(NA_Sales),2) AS NA_sales_by_genre,
-        ROUND(SUM(JP_Sales),2) AS JP_sales_by_genre
+        ROUND(SUM(JP_Sales),2) AS JP_sales_by_genre,
+	ROUND(SUM(Other_Sales),2) AS Other_sales_by_genre
 FROM vgsales
 GROUP BY genre
-ORDER BY global_sales_by_genre DESC
+ORDER BY sales_by_genre DESC
 -- Action, Sports, Shooter genres were popular globally except for JP. In JP, Role_Playing genre was the most popular
 
 
 -- 5. 
 -- top 10 publisher in global and in each region
 SELECT 	publisher, 
-		ROUND(SUM(global_sales),2) AS global_sales_by_publisher,
-		ROUND(SUM(EU_Sales),2) AS EU_sales_by_publisher,
+	ROUND(SUM(global_sales),2) AS sales_by_publisher,
+	ROUND(SUM(EU_Sales),2) AS EU_sales_by_publisher,
         ROUND(SUM(NA_Sales),2) AS NA_sales_by_publisher,
         ROUND(SUM(JP_Sales),2) AS JP_sales_by_publisher
 FROM vgsales
 GROUP BY publisher
-ORDER BY global_sales_by_publisher DESC
+ORDER BY sales_by_publisher DESC
 LIMIT 10
 /* 
 - publishers had a high market share such as: Nintendo, Electronic Arts, Activision
