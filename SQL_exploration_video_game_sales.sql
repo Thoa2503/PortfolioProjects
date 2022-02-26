@@ -13,7 +13,7 @@ SELECT year,
 FROM vgsales
 GROUP BY year WITH ROLLUP
 ORDER BY year
--- --> from 1980 to 2008 sales continued to increase, but from 2009 sales began to decline
+-- --> from 1980 to 2008 sales tended to increase, but from 2009 sales began to decline.
 
 
 -- 2.
